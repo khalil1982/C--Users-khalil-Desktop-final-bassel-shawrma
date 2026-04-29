@@ -13,7 +13,8 @@
     "dist": "electron-builder",
     "build": "electron-packager . \"Shawarma Basel POS\" --platform=win32 --arch=x64 --out=dist --overwrite --icon=assets/icons/app-icon.ico --ignore=\"^dist[0-9]\" --prune=true",
     "build:dist2": "electron-packager . \"Shawarma Basel POS\" --platform=win32 --arch=x64 --out=dist2 --overwrite --icon=assets/icons/app-icon.ico --ignore=\"^dist[0-9]\" --prune=true",
-    "build:dist3": "electron-packager . \"Shawarma Basel POS\" --platform=win32 --arch=x64 --out=dist3 --overwrite --icon=assets/icons/app-icon.ico --ignore=\"^dist[0-9]\" --prune=true"
+    "build:dist3": "electron-packager . \"Shawarma Basel POS\" --platform=win32 --arch=x64 --out=dist3 --overwrite --icon=assets/icons/app-icon.ico --ignore=\"^dist[0-9]\" --prune=true",
+    "build:dist5": "electron-packager . \"Shawarma Basel POS\" --platform=win32 --arch=x64 --out=dist5 --overwrite --icon=assets/icons/app-icon.ico --ignore=\"^dist[0-9]\" --prune=false"
   },
   "keywords": [
     "electron",
