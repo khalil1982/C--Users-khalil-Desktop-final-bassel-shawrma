@@ -1,0 +1,230 @@
+/* ============================================
+   Customers Styles
+   ============================================ */
+
+.customers-content {
+  padding: var(--spacing-6);
+  display: grid;
+  gap: var(--spacing-6);
+}
+
+.panel {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-5);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-4);
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.customers-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--spacing-4);
+  flex-wrap: wrap;
+}
+
+.customers-header .text-muted {
+  margin: 0.25rem 0 0;
+  color: var(--text-muted);
+}
+
+.search-actions {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--spacing-3);
+  flex-wrap: wrap;
+}
+
+.search-actions input {
+  min-width: 260px;
+}
+
+.customers-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: var(--spacing-5);
+}
+
+.list-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+  min-height: 80px;
+}
+
+.list-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-3);
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-3);
+}
+
+.list-card .card-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.list-card .card-title {
+  font-weight: var(--font-semibold);
+}
+
+.list-card .card-subtitle {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.card-actions {
+  display: flex;
+  gap: var(--spacing-2);
+  flex-wrap: wrap;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  background: var(--warning-100);
+  color: var(--warning-700);
+}
+
+.status-badge.clear {
+  background: var(--success-100);
+  color: var(--success-700);
+}
+
+.customer-details .details-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.details-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-3);
+  flex-wrap: wrap;
+}
+
+.details-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--spacing-3);
+}
+
+.summary-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-3);
+  background: #fff;
+}
+
+.summary-label {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.summary-value {
+  font-size: 1.1rem;
+  font-weight: var(--font-semibold);
+}
+
+.transactions-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.transactions-table th,
+.transactions-table td {
+  padding: 0.6rem;
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.transactions-table th {
+  background: var(--bg-card);
+}
+
+.transactions-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.tr-payment {
+  background: var(--success-50);
+}
+
+.tr-debt {
+  background: var(--error-50);
+}
+
+.amount-cell {
+  font-weight: var(--font-bold);
+}
+
+.tr-payment .amount-cell {
+  color: var(--success-700);
+}
+
+.tr-debt .amount-cell {
+  color: var(--error-700);
+}
+
+.details-ledger {
+  margin-top: var(--spacing-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.details-ledger h4 {
+  margin: 0;
+  color: var(--neutral-700);
+  border-bottom: 2px solid var(--border);
+  padding-bottom: var(--spacing-2);
+}
+
+.modal-error {
+  min-height: 1.5rem;
+  margin-top: var(--spacing-2);
+  color: var(--error-text);
+}
+
+.repay-summary {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-3);
+  margin-bottom: var(--spacing-4);
+  font-weight: var(--font-semibold);
+}
+
+@media (max-width: 1100px) {
+  .customers-layout {
+    grid-template-columns: 1fr;
+  }
+}

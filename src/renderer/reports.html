@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>التقارير – Shawarma Basel POS</title>
+  <link rel="stylesheet" href="css/shared.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/reports.css">
+</head>
+<body>
+  <div class="app dashboard-app">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-placeholder-sm" aria-hidden="true">
+          <img src="../../assets/icon.svg" alt="" class="logo-icon">
+        </div>
+        <div>
+          <div class="sidebar-title">شاورما باسل</div>
+          <div class="sidebar-subtitle">لوحة التحكم</div>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <button type="button" class="nav-item" data-target="dashboard">الرئيسية</button>
+        <button type="button" class="nav-item" data-target="menu">الأصناف</button>
+        <button type="button" class="nav-item" data-target="orders">الطلبات</button>
+        <button type="button" class="nav-item" data-target="customers">الديون</button>
+        <button type="button" class="nav-item" data-target="finance">المالية</button>
+        <button type="button" class="nav-item" data-target="employees">العاملين</button>
+        <button type="button" class="nav-item active" data-target="reports">التقارير</button>
+        <button type="button" class="nav-item" data-target="settings">الإعدادات</button>
+        <button type="button" class="nav-item" data-target="contact">تواصل معنا</button>
+      </nav>
+    </aside>
+
+    <div class="dashboard-content">
+      <header class="top-bar">
+        <div class="top-bar-left">
+          <span class="system-name-top">التقارير</span>
+        </div>
+        <div class="top-bar-right">
+          <span class="user-badge" id="userBadge">—</span>
+          <button type="button" class="btn-logout" id="btnLogout" aria-label="خروج">خروج</button>
+        </div>
+      </header>
+
+      <main class="main-content reports-content">
+        <section class="report-toolbar">
+          <div class="report-form">
+            <label for="reportStartDate">من</label>
+            <input type="date" id="reportStartDate" />
+            <label for="reportEndDate">إلى</label>
+            <input type="date" id="reportEndDate" />
+            <button type="button" class="btn-secondary" id="btnRefreshReports">تحديث</button>
+          </div>
+          <button type="button" class="btn-primary" id="btnExportExcel">تصدير إلى Excel</button>
+        </section>
+
+        <section class="report-section report-section-sales">
+          <h2>ملخص المبيعات</h2>
+          <div class="report-cards" id="summaryReportCards"></div>
+        </section>
+
+        <section class="report-section report-section-best-selling">
+          <h2>أفضل المبيعات</h2>
+          <table class="report-table" id="bestSellingTable">
+            <thead>
+              <tr>
+                <th>الصنف</th>
+                <th>الكمية</th>
+                <th>الإيراد</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </section>
+
+        <section class="report-section report-section-purchases">
+          <h2>تفصيل المشتريات</h2>
+          <table class="report-table" id="purchasesTable">
+            <thead>
+              <tr>
+                <th>الفئة</th>
+                <th>تاريخ العمل</th>
+                <th>عدد الحركات</th>
+                <th>إجمالي المبلغ</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </section>
+
+        <section class="report-section report-section-tables">
+          <h2>تقرير الطاولات</h2>
+          <table class="report-table" id="tablesReportTable">
+            <thead>
+              <tr>
+                <th>رقم الطاولة</th>
+                <th>عدد الطلبات</th>
+                <th>الإجمالي الكلي</th>
+                <th>نقداً</th>
+                <th>تطبيق بنكي</th>
+                <th>دين</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </section>
+
+        <section class="report-section report-section-finance">
+          <h2>📊 السجل المالي</h2>
+          <div id="financialRecordContainer" class="financial-record-grid">
+            <!-- سيتم تعبئته بواسطة JS -->
+          </div>
+        </section>
+
+        <section class="report-section report-section-employees">
+          <h2>💼 رواتب وسحوبات العاملين</h2>
+          <div class="report-cards" id="employeesReportCards"></div>
+        </section>
+
+        <section class="report-section report-section-debts">
+          <h2>إدارة الديون وسدادها</h2>
+          <h3>الديون الفعالة</h3>
+          <table class="report-table" id="debtsTable">
+            <thead>
+              <tr>
+                <th>الزبون</th>
+                <th>الهاتف</th>
+                <th>الرصيد الحالي</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+
+          <div class="report-subsection">
+            <h3>سجل السداد</h3>
+            <table class="report-table" id="repaymentsTable">
+              <thead>
+                <tr>
+                  <th>الزبون</th>
+                  <th>القيمة</th>
+                  <th>طريقة الدفع</th>
+                  <th>التاريخ</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </section>
+
+        <div class="error-area" id="errorArea" role="alert" aria-live="polite"></div>
+      </main>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="settingsGateModal" role="dialog" aria-labelledby="settingsGateModalTitle" aria-modal="true">
+    <div class="modal-dialog">
+      <h2 class="modal-title" id="settingsGateModalTitle">كلمة سر مدير النظام</h2>
+      <div class="modal-body">
+        <p class="modal-note">الإعدادات مخصصة للمدير. أدخل كلمة السر للدخول.</p>
+        <div class="form-row">
+          <label for="settingsGatePassword">كلمة السر</label>
+          <input type="password" id="settingsGatePassword" autocomplete="off" />
+        </div>
+        <p class="modal-note text-danger" id="settingsGateError" role="alert"></p>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="settingsGateCancel">إلغاء</button>
+        <button type="button" class="btn-primary" id="settingsGateConfirm">موافق</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="logoutModal" role="dialog" aria-labelledby="logoutModalTitle" aria-modal="true">
+    <div class="modal-dialog">
+      <h2 class="modal-title" id="logoutModalTitle">⚠ تأكيد الخروج</h2>
+      <div class="modal-body">
+        <p>هل أنت متأكد من الخروج من النظام؟</p>
+        <p class="modal-note">ملاحظة: سيتم إنهاء الجلسة الحالية فقط. التطبيق سيبقى مفتوحاً.</p>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="logoutCancel">إلغاء</button>
+        <button type="button" class="btn-danger" id="logoutConfirm">تأكيد الخروج</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/modal-global.js"></script>
+  <script type="module" src="js/icons.js"></script>
+  <script src="js/ui-sidebar.js"></script>
+  <script src="js/settings-gate.js"></script>
+  <script src="js/reports.js"></script>
+</body>
+</html>

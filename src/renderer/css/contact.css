@@ -1,0 +1,94 @@
+/* تواصل معنا */
+
+.contact-content {
+  padding: var(--spacing-6);
+  max-width: 560px;
+}
+
+.contact-card {
+  border: 1px solid var(--primary-200);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-6);
+  box-shadow: 0 6px 20px var(--shadow);
+  background: linear-gradient(135deg, var(--primary-50) 0%, var(--neutral-50) 100%);
+}
+
+.contact-card h2 {
+  color: var(--primary-800);
+  text-align: center;
+  margin: 0 0 var(--spacing-4);
+  padding-bottom: var(--spacing-3);
+  border-bottom: 2px solid var(--primary-200);
+  font-size: var(--text-xl);
+}
+
+.contact-description {
+  margin-bottom: var(--spacing-6);
+  padding: var(--spacing-4);
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--neutral-100);
+}
+
+.contact-description p {
+  margin: 0;
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--neutral-700);
+  text-align: center;
+}
+
+.contact-info h3 {
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  color: var(--neutral-800);
+  margin: 0 0 var(--spacing-4);
+  text-align: center;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  padding: var(--spacing-3);
+  margin-bottom: var(--spacing-3);
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--neutral-100);
+  transition: all 0.2s ease;
+}
+
+.contact-item:hover {
+  background: var(--primary-50);
+  border-color: var(--primary-200);
+  transform: translateX(-4px);
+}
+
+.contact-icon {
+  width: var(--icon-md);
+  height: var(--icon-md);
+  min-width: var(--icon-md);
+  color: var(--primary-600);
+  flex-shrink: 0;
+}
+
+.contact-icon:not([src]) {
+  display: none;
+}
+
+.contact-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.contact-label {
+  font-size: var(--text-sm);
+  color: var(--neutral-500);
+}
+
+.contact-value {
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
+  color: var(--neutral-800);
+}

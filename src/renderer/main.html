@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shawarma Basel POS</title>
+  <link rel="stylesheet" href="css/shared.css">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <div class="app dashboard-app">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-placeholder-sm" aria-hidden="true">🥙</div>
+        <div>
+          <div class="sidebar-title">شاورما باسل</div>
+          <div class="sidebar-subtitle">لوحة التحكم</div>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <button type="button" class="nav-item active" data-target="dashboard">الرئيسية</button>
+        <button type="button" class="nav-item" data-target="menu">الأصناف</button>
+        <button type="button" class="nav-item" data-target="orders">الطلبات</button>
+        <button type="button" class="nav-item" data-target="customers">الديون</button>
+        <button type="button" class="nav-item" data-target="finance">المالية</button>
+        <button type="button" class="nav-item" data-target="employees">العاملين</button>
+        <button type="button" class="nav-item" data-target="reports">التقارير</button>
+        <button type="button" class="nav-item" data-target="settings">الإعدادات</button>
+        <button type="button" class="nav-item" data-target="contact">تواصل معنا</button>
+      </nav>
+    </aside>
+
+    <div class="dashboard-content">
+      <header class="top-bar">
+        <div class="top-bar-left">
+          <span class="system-name-top" id="systemNameTop">Shawarma Basel POS – نظام إدارة المطعم</span>
+        </div>
+        <div class="top-bar-right">
+          <span class="user-badge" id="userBadge">—</span>
+          <button type="button" class="btn-logout" id="btnLogout" aria-label="خروج">🚪 خروج</button>
+        </div>
+      </header>
+
+      <main class="main-content dashboard-main">
+        <section class="dashboard-hero">
+          <h1>مرحباً بك</h1>
+          <p>اختر القسم المطلوب من القائمة الجانبية لإدارة المطعم.</p>
+        </section>
+
+        <section class="dashboard-grid">
+          <button type="button" class="dashboard-card" data-target="orders">
+            <div class="card-icon" data-icon="shoppingCart"></div>
+            <div class="card-title">الطلبات</div>
+            <div class="card-meta">إدارة الطلبات الجديدة</div>
+          </button>
+          <button type="button" class="dashboard-card" data-target="menu">
+            <div class="card-icon" data-icon="table2"></div>
+            <div class="card-title">الأصناف</div>
+            <div class="card-meta">إضافة وتحديث القائمة</div>
+          </button>
+          <button type="button" class="dashboard-card" data-target="customers">
+            <div class="card-icon" data-icon="receipt"></div>
+            <div class="card-title">الديون</div>
+            <div class="card-meta">متابعة الديون والمدفوعات</div>
+          </button>
+          <button type="button" class="dashboard-card" data-target="finance">
+            <div class="card-icon" data-icon="trendingDown"></div>
+            <div class="card-title">المالية</div>
+            <div class="card-meta">المصروفات والسحوبات</div>
+          </button>
+          <button type="button" class="dashboard-card" data-target="employees">
+            <div class="card-icon" data-icon="users"></div>
+            <div class="card-title">العاملين</div>
+            <div class="card-meta">إدارة الموظفين والرواتب</div>
+          </button>
+          <button type="button" class="dashboard-card" data-target="reports">
+            <div class="card-icon" data-icon="fileText"></div>
+            <div class="card-title">التقارير</div>
+            <div class="card-meta">الملخصات المالية والمبيعات</div>
+          </button>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="settingsGateModal" role="dialog" aria-labelledby="settingsGateModalTitle" aria-modal="true">
+    <div class="modal-dialog">
+      <h2 class="modal-title" id="settingsGateModalTitle">كلمة سر مدير النظام</h2>
+      <div class="modal-body">
+        <p class="modal-note">الإعدادات مخصصة للمدير. أدخل كلمة السر للدخول.</p>
+        <div class="form-row">
+          <label for="settingsGatePassword">كلمة السر</label>
+          <input type="password" id="settingsGatePassword" autocomplete="off" />
+        </div>
+        <p class="modal-note text-danger" id="settingsGateError" role="alert"></p>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="settingsGateCancel">إلغاء</button>
+        <button type="button" class="btn-primary" id="settingsGateConfirm">موافق</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="logoutModal" role="dialog" aria-labelledby="logoutModalTitle" aria-modal="true">
+    <div class="modal-dialog">
+      <h2 class="modal-title" id="logoutModalTitle">⚠ تأكيد الخروج</h2>
+      <div class="modal-body">
+        <p>هل أنت متأكد من الخروج من النظام؟</p>
+        <p class="modal-note">ملاحظة: سيتم إنهاء الجلسة الحالية فقط. التطبيق سيبقى مفتوحاً.</p>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="logoutCancel">إلغاء</button>
+        <button type="button" class="btn-danger" id="logoutConfirm">تأكيد الخروج</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/modal-global.js"></script>
+  <script type="module" src="js/icons.js"></script>
+  <script src="js/ui-sidebar.js"></script>
+  <script src="js/settings-gate.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

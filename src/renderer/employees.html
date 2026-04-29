@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>العاملين – Shawarma Basel POS</title>
+  <link rel="stylesheet" href="css/shared.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/finance.css">
+  <link rel="stylesheet" href="css/employees.css">
+</head>
+<body>
+  <div class="app dashboard-app">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-placeholder-sm" aria-hidden="true">🥙</div>
+        <div>
+          <div class="sidebar-title">شاورما باسل</div>
+          <div class="sidebar-subtitle">لوحة التحكم</div>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <button type="button" class="nav-item" data-target="dashboard">الرئيسية</button>
+        <button type="button" class="nav-item" data-target="menu">الأصناف</button>
+        <button type="button" class="nav-item" data-target="orders">الطلبات</button>
+        <button type="button" class="nav-item" data-target="customers">الديون</button>
+        <button type="button" class="nav-item" data-target="finance">المالية</button>
+        <button type="button" class="nav-item active" data-target="employees">العاملين</button>
+        <button type="button" class="nav-item" data-target="reports">التقارير</button>
+        <button type="button" class="nav-item" data-target="settings">الإعدادات</button>
+        <button type="button" class="nav-item" data-target="contact">تواصل معنا</button>
+      </nav>
+    </aside>
+
+    <div class="dashboard-content">
+      <header class="top-bar">
+        <div class="top-bar-left">
+          <span class="system-name-top">العاملين</span>
+        </div>
+        <div class="top-bar-right">
+          <span class="user-badge" id="userBadge">—</span>
+          <button type="button" class="btn-logout" id="btnLogout" aria-label="خروج">🚪 خروج</button>
+        </div>
+      </header>
+
+      <main class="main-content finance-content employees-page">
+        <section class="panel employees-panel">
+          <div class="panel-header">
+            <h3>العاملين</h3>
+            <div class="panel-header-actions">
+              <button type="button" class="btn-filter active" id="btnShowActive">🟢 النشطين فقط</button>
+              <button type="button" class="btn-filter" id="btnShowAll">👥 عرض الكل</button>
+              <button type="button" class="btn-primary" id="btnOpenAddEmployee">+ إضافة عامل</button>
+              <button type="button" class="btn-secondary" id="btnViewSalariesReport">📊 التقرير</button>
+            </div>
+          </div>
+          <div id="employeesList" class="employees-cards"></div>
+        </section>
+
+        <div class="error-area" id="errorArea" role="alert" aria-live="polite"></div>
+      </main>
+    </div>
+  </div>
+
+  <!-- موديل إضافة/تعديل عامل -->
+  <div class="modal-overlay hidden" id="addEmployeeModal" role="dialog" aria-modal="true">
+    <div class="modal-dialog">
+      <h2 class="modal-title" id="addEmployeeModalTitle">✏️ إضافة عامل جديد</h2>
+      <div class="modal-body">
+        <div class="form-row">
+          <label for="modalEmployeeName">الاسم الكامل</label>
+          <input type="text" id="modalEmployeeName" />
+        </div>
+        <div class="form-row">
+          <label for="modalEmployeePhone">رقم الهاتف</label>
+          <input type="text" id="modalEmployeePhone" />
+        </div>
+        <div class="form-row">
+          <label for="modalEmployeeNationalId">رقم الهوية (اختياري)</label>
+          <input type="text" id="modalEmployeeNationalId" />
+        </div>
+        <div class="form-row">
+          <label for="modalEmployeeStatus">الحالة</label>
+          <select id="modalEmployeeStatus">
+            <option value="active">نشط</option>
+            <option value="inactive">غير نشط</option>
+          </select>
+        </div>
+        <div id="addEmployeeError" class="error-text"></div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="addEmployeeCancel">إلغاء</button>
+        <button type="button" class="btn-primary" id="addEmployeeConfirm">حفظ</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="editEmployeeModal" role="dialog" aria-modal="true">
+    <div class="modal-dialog">
+      <h2 class="modal-title">✏️ تعديل عامل</h2>
+      <div class="modal-body">
+        <div class="form-row">
+          <label for="editEmployeeName">الاسم الكامل</label>
+          <input type="text" id="editEmployeeName" />
+        </div>
+        <div class="form-row">
+          <label for="editEmployeePhone">رقم الهاتف</label>
+          <input type="text" id="editEmployeePhone" />
+        </div>
+        <div class="form-row">
+          <label for="editEmployeeNationalId">رقم الهوية (اختياري)</label>
+          <input type="text" id="editEmployeeNationalId" />
+        </div>
+        <div class="form-row">
+          <label for="editEmployeeSalary">الراتب الشهري (₪)</label>
+          <input type="number" id="editEmployeeSalary" min="0" step="0.01" />
+        </div>
+        <div class="form-row">
+          <label for="editEmployeeStatus">الحالة</label>
+          <select id="editEmployeeStatus">
+            <option value="active">نشط</option>
+            <option value="inactive">غير نشط</option>
+          </select>
+        </div>
+        <div id="editEmployeeError" class="error-text"></div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="editEmployeeCancel">إلغاء</button>
+        <button type="button" class="btn-primary" id="editEmployeeConfirm">حفظ</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- موديل تسليم مرتب شهري -->
+  <div class="modal-overlay hidden" id="salaryModal" role="dialog" aria-modal="true">
+    <div class="modal-dialog">
+      <h2 class="modal-title">💰 تسليم مرتب شهري</h2>
+      <div class="modal-body">
+        <div class="form-row">
+          <label for="salaryModalEmployee">الموظف</label>
+          <select id="salaryModalEmployee"></select>
+        </div>
+        <div class="form-row">
+          <label for="salaryModalMonth">الشهر</label>
+          <input type="month" id="salaryModalMonth" />
+        </div>
+        <div class="form-row">
+          <label for="salaryModalAmount">المرتب (₪)</label>
+          <input type="number" id="salaryModalAmount" min="0" step="0.01" />
+        </div>
+        <div class="form-row">
+          <label for="salaryModalNotes">ملاحظات (اختياري)</label>
+          <input type="text" id="salaryModalNotes" />
+        </div>
+        <div id="salaryModalError" class="error-text"></div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="salaryModalCancel">إلغاء</button>
+        <button type="button" class="btn-primary btn-salary" id="salaryModalConfirm">تسليم المرتب</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- موديل سحب سلفة -->
+  <div class="modal-overlay hidden" id="withdrawalModal" role="dialog" aria-modal="true">
+    <div class="modal-dialog">
+      <h2 class="modal-title">💵 سحب سلفة</h2>
+      <div class="modal-body">
+        <div class="form-row">
+          <label for="withdrawalModalEmployee">الموظف</label>
+          <select id="withdrawalModalEmployee"></select>
+        </div>
+        <div class="form-row">
+          <label for="withdrawalModalAmount">المبلغ (₪)</label>
+          <input type="number" id="withdrawalModalAmount" min="0" step="0.01" />
+        </div>
+        <div class="form-row">
+          <label for="withdrawalModalDate">التاريخ</label>
+          <input type="date" id="withdrawalModalDate" />
+        </div>
+        <div class="form-row">
+          <label for="withdrawalModalNotes">ملاحظات (اختياري)</label>
+          <input type="text" id="withdrawalModalNotes" />
+        </div>
+        <div id="withdrawalModalError" class="error-text"></div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="withdrawalModalCancel">إلغاء</button>
+        <button type="button" class="btn-primary btn-withdrawal" id="withdrawalModalConfirm">تسجيل السحب</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- موديل التفاصيل المالية -->
+  <div class="modal-overlay hidden" id="employeeDetailsModal" role="dialog" aria-modal="true">
+    <div class="modal-dialog modal-large">
+      <h2 class="modal-title" id="employeeDetailsTitle">📊 التفاصيل المالية</h2>
+      <div class="modal-body">
+        <div class="details-filters" id="employeeDetailsFilters">
+          <div class="form-row">
+            <label for="detailsMonth">الشهر</label>
+            <input type="month" id="detailsMonth" />
+          </div>
+          <button type="button" class="btn-secondary" id="btnApplyDetailsFilter">تطبيق الفلتر</button>
+          <button type="button" class="btn-secondary" id="btnShowAllDetails">عرض الكل</button>
+        </div>
+        <div id="employeeDetailsContent"></div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="employeeDetailsPrint">طباعة</button>
+        <button type="button" class="btn-secondary" id="employeeDetailsExport">تصدير Excel</button>
+        <button type="button" class="btn-primary" id="employeeDetailsClose">إغلاق</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="salariesReportModal" role="dialog" aria-modal="true">
+    <div class="modal-dialog modal-large">
+      <h2 class="modal-title">تقرير الرواتب</h2>
+      <div class="modal-body" id="salariesReportContent"></div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="salariesReportClose">إغلاق</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="settingsGateModal" role="dialog" aria-labelledby="settingsGateModalTitle" aria-modal="true">
+    <div class="modal-dialog">
+      <h2 class="modal-title" id="settingsGateModalTitle">كلمة سر مدير النظام</h2>
+      <div class="modal-body">
+        <p class="modal-note">الإعدادات مخصصة للمدير. أدخل كلمة السر للدخول.</p>
+        <div class="form-row">
+          <label for="settingsGatePassword">كلمة السر</label>
+          <input type="password" id="settingsGatePassword" autocomplete="off" />
+        </div>
+        <p class="modal-note text-danger" id="settingsGateError" role="alert"></p>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="settingsGateCancel">إلغاء</button>
+        <button type="button" class="btn-primary" id="settingsGateConfirm">موافق</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="logoutModal" role="dialog" aria-labelledby="logoutModalTitle" aria-modal="true">
+    <div class="modal-dialog">
+      <h2 class="modal-title" id="logoutModalTitle">⚠ تأكيد الخروج</h2>
+      <div class="modal-body">
+        <p>هل أنت متأكد من الخروج من النظام؟</p>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="logoutCancel">إلغاء</button>
+        <button type="button" class="btn-danger" id="logoutConfirm">تأكيد الخروج</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/modal-global.js"></script>
+  <script type="module" src="js/icons.js"></script>
+  <script src="js/ui-sidebar.js"></script>
+  <script src="js/settings-gate.js"></script>
+  <script type="module" src="js/employees/index.js"></script>
+</body>
+</html>

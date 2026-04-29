@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الإعدادات – Shawarma Basel POS</title>
+  <link rel="stylesheet" href="css/shared.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/settings.css">
+</head>
+<body>
+  <div class="app dashboard-app">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-placeholder-sm" aria-hidden="true">🥙</div>
+        <div>
+          <div class="sidebar-title">شاورما باسل</div>
+          <div class="sidebar-subtitle">لوحة التحكم</div>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <button type="button" class="nav-item" data-target="dashboard">الرئيسية</button>
+        <button type="button" class="nav-item" data-target="menu">الأصناف</button>
+        <button type="button" class="nav-item" data-target="orders">الطلبات</button>
+        <button type="button" class="nav-item" data-target="customers">الديون</button>
+        <button type="button" class="nav-item" data-target="finance">المالية</button>
+        <button type="button" class="nav-item" data-target="employees">العاملين</button>
+        <button type="button" class="nav-item" data-target="reports">التقارير</button>
+        <button type="button" class="nav-item active" data-target="settings">الإعدادات</button>
+        <button type="button" class="nav-item" data-target="contact">تواصل معنا</button>
+      </nav>
+    </aside>
+
+    <div class="dashboard-content">
+      <header class="top-bar">
+        <div class="top-bar-left">
+          <span class="system-name-top" id="systemName">الإعدادات</span>
+        </div>
+        <div class="top-bar-right">
+          <span class="user-badge" id="userBadge">—</span>
+          <button type="button" class="btn-logout" id="btnLogout" aria-label="خروج">🚪 خروج</button>
+        </div>
+      </header>
+
+      <main class="main-content settings-content">
+        <div class="settings-grid">
+          <section class="settings-form">
+            <h2>إعدادات العرض</h2>
+            <div class="form-row">
+              <label for="restaurantName">اسم المطعم</label>
+              <input type="text" id="restaurantName" />
+            </div>
+            <div class="form-row">
+              <label for="currencySymbol">رمز العملة</label>
+              <input type="text" id="currencySymbol" />
+            </div>
+            <div class="form-row checkbox-row">
+              <label>
+                <input type="checkbox" id="showCurrencySymbol" />
+                عرض رمز العملة
+              </label>
+            </div>
+            <div class="form-row checkbox-row">
+              <label>
+                <input type="checkbox" id="autoStart" />
+                تشغيل التطبيق تلقائياً عند بدء تشغيل Windows
+              </label>
+            </div>
+            <button type="button" class="btn-primary" id="btnSaveSettings">حفظ</button>
+            <div class="result-area" id="resultArea" role="alert" aria-live="polite"></div>
+          </section>
+
+          <section class="settings-form">
+            <h2>النسخ الاحتياطي والاستعادة</h2>
+            <p class="modal-note">يمكنك نسخ احتياطي لجميع البيانات أو استعادتها من ملف نسخ احتياطي سابق.</p>
+            <div class="form-row">
+              <button type="button" class="btn-primary" id="btnBackup">نسخ احتياطي</button>
+            </div>
+            <div class="form-row">
+              <button type="button" class="btn-secondary" id="btnRestore">استعادة</button>
+            </div>
+            <div class="result-area" id="backupResult" role="alert" aria-live="polite"></div>
+          </section>
+
+          <section class="settings-form danger-zone">
+            <h2>مسح البيانات للاستخدام الجديد</h2>
+            <p class="modal-note">يزيل جميع الديون، السجلات المالية، المبيعات والمشتريات، أسماء الشركاء والموظفين، والتقارير. يبقى الأصناف وفئات المشتريات والمستخدمون.</p>
+            <button type="button" class="btn-danger" id="btnClearData">مسح جميع البيانات</button>
+            <div class="result-area" id="clearDataResult" role="alert" aria-live="polite"></div>
+          </section>
+
+          <section class="settings-form">
+            <h2>إدارة كلمات المرور</h2>
+            <div class="form-row">
+              <label for="userSelect">المستخدم</label>
+              <select id="userSelect"></select>
+            </div>
+            <div class="form-row">
+              <label for="adminPassword">كلمة مرور المدير</label>
+              <input type="password" id="adminPassword" />
+            </div>
+            <div class="form-row">
+              <label for="newUserPassword">كلمة المرور الجديدة</label>
+              <input type="password" id="newUserPassword" />
+            </div>
+            <div class="form-row">
+              <label for="confirmUserPassword">تأكيد كلمة المرور الجديدة</label>
+              <input type="password" id="confirmUserPassword" />
+            </div>
+            <button type="button" class="btn-primary" id="btnChangePassword">تغيير كلمة المرور</button>
+            <div class="result-area" id="passwordResult" role="alert" aria-live="polite"></div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="settingsGateModal" role="dialog" aria-labelledby="settingsGateModalTitle" aria-modal="true">
+    <div class="modal-dialog">
+      <h2 class="modal-title" id="settingsGateModalTitle">كلمة سر مدير النظام</h2>
+      <div class="modal-body">
+        <p class="modal-note">الإعدادات مخصصة للمدير. أدخل كلمة السر للدخول.</p>
+        <div class="form-row">
+          <label for="settingsGatePassword">كلمة السر</label>
+          <input type="password" id="settingsGatePassword" autocomplete="off" />
+        </div>
+        <p class="modal-note text-danger" id="settingsGateError" role="alert"></p>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="settingsGateCancel">إلغاء</button>
+        <button type="button" class="btn-primary" id="settingsGateConfirm">موافق</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="clearDataModal" role="dialog" aria-labelledby="clearDataModalTitle" aria-modal="true">
+    <div class="modal-dialog">
+      <h2 class="modal-title" id="clearDataModalTitle">⚠ مسح جميع البيانات</h2>
+      <div class="modal-body">
+        <p>سيتم حذف الديون، السجلات المالية، المبيعات والمشتريات، أسماء الشركاء والموظفين، وجميع التقارير. هل أنت متأكد؟</p>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="clearDataCancel">إلغاء</button>
+        <button type="button" class="btn-danger" id="clearDataConfirm">تأكيد المسح</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="logoutModal" role="dialog" aria-labelledby="logoutModalTitle" aria-modal="true">
+    <div class="modal-dialog">
+      <h2 class="modal-title" id="logoutModalTitle">⚠ تأكيد الخروج</h2>
+      <div class="modal-body">
+        <p>هل أنت متأكد من الخروج من النظام؟</p>
+        <p class="modal-note">ملاحظة: سيتم إنهاء الجلسة الحالية فقط. التطبيق سيبقى مفتوحاً.</p>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="logoutCancel">إلغاء</button>
+        <button type="button" class="btn-danger" id="logoutConfirm">تأكيد الخروج</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/modal-global.js"></script>
+  <script type="module" src="js/icons.js"></script>
+  <script src="js/ui-sidebar.js"></script>
+  <script src="js/settings-gate.js"></script>
+  <script src="js/settings.js"></script>
+</body>
+</html>

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نقطة البيع – Shawarma Basel POS</title>
+  <link rel="stylesheet" href="css/shared.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/pos.css">
+</head>
+<body>
+  <div class="app dashboard-app">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-placeholder-sm" aria-hidden="true">
+          <img src="../../assets/icon.svg" alt="" class="logo-icon">
+        </div>
+        <div>
+          <div class="sidebar-title">شاورما باسل</div>
+          <div class="sidebar-subtitle">لوحة التحكم</div>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <button type="button" class="nav-item" data-target="dashboard">الرئيسية</button>
+        <button type="button" class="nav-item" data-target="menu">الأصناف</button>
+        <button type="button" class="nav-item active" data-target="orders">الطلبات</button>
+        <button type="button" class="nav-item" data-target="customers">الديون</button>
+        <button type="button" class="nav-item" data-target="finance">المالية</button>
+        <button type="button" class="nav-item" data-target="employees">العاملين</button>
+        <button type="button" class="nav-item" data-target="reports">التقارير</button>
+        <button type="button" class="nav-item" data-target="settings">الإعدادات</button>
+        <button type="button" class="nav-item" data-target="contact">تواصل معنا</button>
+      </nav>
+    </aside>
+
+    <div class="dashboard-content">
+      <header class="top-bar">
+        <div class="top-bar-left">
+          <span class="system-name-top">إدارة الطلبات</span>
+        </div>
+        <div class="top-bar-right">
+          <span class="user-badge" id="userBadge">—</span>
+          <button type="button" class="btn-logout" id="btnLogout" aria-label="خروج">خروج</button>
+        </div>
+      </header>
+
+      <main class="main-content pos-main">
+        <div class="pos-header">
+          <div>
+            <h2 id="orderHeader">طلب جديد</h2>
+            <div class="order-status-badge" id="orderStatusBadge">غير مستلم</div>
+          </div>
+          <div class="pos-header-actions">
+            <button class="btn-secondary btn-sm" id="tablesBtn">الطاولات</button>
+            <button class="btn-secondary btn-sm" id="newOrderBtn">طلب جديد</button>
+          </div>
+        </div>
+
+        <div class="pos-layout">
+          <section class="menu-section">
+            <div class="menu-toolbar">
+              <div class="category-filters">
+                <button type="button" class="filter-btn active" data-category="all">الكل</button>
+                <button type="button" class="filter-btn" data-category="shawarma">شاورما</button>
+                <button type="button" class="filter-btn" data-category="drinks">مشروبات</button>
+                <button type="button" class="filter-btn" data-category="extras">إضافات</button>
+              </div>
+              <input type="search" id="menuSearch" placeholder="بحث سريع..." />
+            </div>
+            <div class="menu-grid" id="menuGrid"></div>
+            <section class="activity-panel activity-panel-below-menu">
+              <h3>آخر النشاطات</h3>
+              <div class="activity-list" id="activityList"></div>
+            </section>
+          </section>
+
+          <div class="side-panels">
+            <aside class="order-summary">
+              <h3>الطلب الحالي</h3>
+              <div class="order-items" id="orderItems"></div>
+              <div class="order-totals">
+                <div class="total-line">
+                  <span>المجموع الفرعي:</span>
+                  <span id="subtotal">₪0.00</span>
+                </div>
+                <div class="total-line">
+                  <span>الخصم:</span>
+                  <span id="discountAmount">₪0.00</span>
+                </div>
+                <div class="total-line total-final">
+                  <span>الإجمالي:</span>
+                  <span id="finalTotal">₪0.00</span>
+                </div>
+              </div>
+              <div class="pos-actions">
+                <button class="btn-primary" id="btnMarkReceived">تأكيد الاستلام</button>
+                <button class="btn-secondary" id="btnApplyDiscount">خصم</button>
+                <button class="btn-secondary" id="btnRemoveDiscount">إزالة الخصم</button>
+                <button class="btn-secondary" id="btnCancelOrder">إلغاء الطلب</button>
+              </div>
+            </aside>
+          </div>
+        </div>
+
+        <div class="error-area" id="errorArea" role="alert" aria-live="polite"></div>
+      </main>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="settingsGateModal" role="dialog" aria-labelledby="settingsGateModalTitle" aria-modal="true">
+    <div class="modal-dialog">
+      <h2 class="modal-title" id="settingsGateModalTitle">كلمة سر مدير النظام</h2>
+      <div class="modal-body">
+        <p class="modal-note">الإعدادات مخصصة للمدير. أدخل كلمة السر للدخول.</p>
+        <div class="form-row">
+          <label for="settingsGatePassword">كلمة السر</label>
+          <input type="password" id="settingsGatePassword" autocomplete="off" />
+        </div>
+        <p class="modal-note text-danger" id="settingsGateError" role="alert"></p>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="settingsGateCancel">إلغاء</button>
+        <button type="button" class="btn-primary" id="settingsGateConfirm">موافق</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="logoutModal" role="dialog" aria-labelledby="logoutModalTitle" aria-modal="true">
+    <div class="modal-dialog">
+      <h2 class="modal-title" id="logoutModalTitle">⚠ تأكيد الخروج</h2>
+      <div class="modal-body">
+        <p>هل أنت متأكد من الخروج من النظام؟</p>
+        <p class="modal-note">ملاحظة: سيتم إنهاء الجلسة الحالية فقط. التطبيق سيبقى مفتوحاً.</p>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="logoutCancel">إلغاء</button>
+        <button type="button" class="btn-danger" id="logoutConfirm">تأكيد الخروج</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="discountModal" role="dialog" aria-labelledby="discountTitle" aria-modal="true">
+    <div class="modal-dialog">
+      <h2 class="modal-title" id="discountTitle">تطبيق خصم</h2>
+      <div class="modal-body">
+        <div class="discount-buttons-grid">
+          <button type="button" class="btn-discount-select" data-value="5">5%</button>
+          <button type="button" class="btn-discount-select" data-value="10">10%</button>
+          <button type="button" class="btn-discount-select" data-value="15">15%</button>
+        </div>
+        <p class="modal-note">اختر نسبة الخصم المراد تطبيقها.</p>
+        <p class="modal-note" id="discountError"></p>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="discountCancel" style="width: 100%;">إلغاء</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="cancelModal" role="dialog" aria-labelledby="cancelTitle" aria-modal="true">
+    <div class="modal-dialog">
+      <h2 class="modal-title" id="cancelTitle">إلغاء الطلب</h2>
+      <div class="modal-body">
+        <p>يمكنك إدخال سبب الإلغاء (اختياري).</p>
+        <div class="form-row">
+          <label for="cancelReason">السبب</label>
+          <input type="text" id="cancelReason" />
+        </div>
+        <p class="modal-note" id="cancelError"></p>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="cancelDismiss">رجوع</button>
+        <button type="button" class="btn-danger" id="cancelConfirm">تأكيد الإلغاء</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="receiveModal" role="dialog" aria-labelledby="receiveTitle" aria-modal="true">
+    <div class="modal-dialog">
+      <h2 class="modal-title" id="receiveTitle">تأكيد الاستلام</h2>
+      <div class="modal-body">
+        <div class="receipt-summary">
+          <div class="summary-row">
+            <span>رقم الطلب:</span>
+            <span id="receiptOrderNumber">—</span>
+          </div>
+          <div class="summary-row">
+            <span>الإجمالي:</span>
+            <span id="receiptTotal">₪0.00</span>
+          </div>
+          <div class="summary-row">
+            <span>الخصم:</span>
+            <span id="receiptDiscount">₪0.00</span>
+          </div>
+        </div>
+        <div class="form-row">
+          <label>طريقة الدفع</label>
+          <div class="payment-options">
+            <label class="payment-option">
+              <input type="radio" name="paymentMethod" value="cash" />
+              <span>نقداً</span>
+            </label>
+            <label class="payment-option">
+              <input type="radio" name="paymentMethod" value="bank_app" />
+              <span>تطبيق بنكي</span>
+            </label>
+            <label class="payment-option">
+              <input type="radio" name="paymentMethod" value="debt" />
+              <span>دين</span>
+            </label>
+          </div>
+        </div>
+        <div class="form-row">
+          <label for="receiveCustomerName">اسم الزبون</label>
+          <input type="text" id="receiveCustomerName" placeholder="اختياري" />
+        </div>
+        <p class="modal-note" id="receiveError"></p>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="receiveCancel">إلغاء</button>
+        <button type="button" class="btn-primary" id="receiveConfirm">تأكيد الاستلام</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay modal-overlay--top hidden" id="debtPaymentModal" role="dialog" aria-labelledby="debtPaymentTitle" aria-modal="true" data-modal-blocking="true">
+    <div class="modal-dialog">
+      <h2 class="modal-title" id="debtPaymentTitle">إضافة دين - بوابة الديون</h2>
+      <div class="modal-body">
+        <p class="modal-note" id="debtPaymentHint">أدخل بيانات الزبون. إذا كان رقم الهاتف أو الرقم الوطني مسجلاً مسبقاً، سيُضاف الدين إلى إجمالي الدين السابق.</p>
+        <div class="form-grid">
+          <div class="form-row">
+            <label for="debtPaymentName">اسم الزبون</label>
+            <input type="text" id="debtPaymentName" />
+          </div>
+          <div class="form-row">
+            <label for="debtPaymentPhone">رقم الهاتف</label>
+            <input type="text" id="debtPaymentPhone" />
+          </div>
+          <div class="form-row">
+            <label for="debtPaymentNationalId">الرقم الوطني (اختياري)</label>
+            <input type="text" id="debtPaymentNationalId" />
+          </div>
+          <div class="form-row">
+            <label for="debtPaymentAmount">قيمة الدين</label>
+            <input type="number" id="debtPaymentAmount" min="0" step="0.1" inputmode="decimal" />
+            <span class="form-hint" id="debtPaymentMaxHint" aria-live="polite"></span>
+          </div>
+        </div>
+        <p class="modal-note error-text" id="debtPaymentError"></p>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="debtPaymentCancel">إلغاء</button>
+        <button type="button" class="btn-primary" id="debtPaymentConfirm">تأكيد وإضافة الدين</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="activityModal" role="dialog" aria-labelledby="activityTitle" aria-modal="true">
+    <div class="modal-dialog">
+      <h2 class="modal-title" id="activityTitle">تفاصيل النشاط</h2>
+      <div class="modal-body">
+        <div class="receipt-summary">
+          <div class="summary-row">
+            <span>رقم الطلب:</span>
+            <span id="activityOrderNumber">—</span>
+          </div>
+          <div class="summary-row">
+            <span>الإجمالي:</span>
+            <span id="activityTotal">₪0.00</span>
+          </div>
+          <div class="summary-row">
+            <span>حالة الاستلام:</span>
+            <span id="activityReceived">—</span>
+          </div>
+          <div class="summary-row">
+            <span>طريقة الدفع:</span>
+            <span id="activityPayment">—</span>
+          </div>
+        </div>
+        <div class="activity-items" id="activityItems"></div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="activityClose">إغلاق</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="tablesModal" role="dialog" aria-modal="true">
+    <div class="modal-dialog modal-large tables-modal-dialog">
+      <div class="tables-modal-header">
+        <h2 class="modal-title">إدارة طلبات الطاولات</h2>
+        <button type="button" class="btn-close-modal" id="tablesModalClose" aria-label="إغلاق">
+          <span aria-hidden="true">×</span>
+          <span class="btn-close-text">إغلاق</span>
+        </button>
+      </div>
+      <div class="modal-body tables-modal-body">
+        <!-- STEP 1: Tables View (cards only, no menu yet) -->
+        <div id="tablesView" class="tables-view">
+          <div class="tables-view-header">
+            <p class="tables-view-hint">اختر طاولة لبدء أو متابعة الطلب. الحالات تظهر باللون.</p>
+          </div>
+          <div id="tablesGrid" class="tables-grid"></div>
+        </div>
+
+        <!-- STEP 2: Table Order View (menu + order for selected table) -->
+        <div id="tablesOrderView" class="tables-order-view hidden" aria-hidden="true">
+          <div class="tables-order-topbar">
+            <button type="button" class="btn-secondary btn-sm" id="tablesBackBtn">رجوع للطاولات</button>
+            <div class="tables-selected-label" id="tablesSelectedLabel">—</div>
+          </div>
+
+          <div class="tables-pos-interface">
+            <div class="tables-menu-section">
+              <div class="menu-toolbar">
+                <div class="category-filters">
+                  <button type="button" class="filter-btn active" data-category="all">الكل</button>
+                  <button type="button" class="filter-btn" data-category="shawarma">شاورما</button>
+                  <button type="button" class="filter-btn" data-category="drinks">مشروبات</button>
+                  <button type="button" class="filter-btn" data-category="extras">إضافات</button>
+                </div>
+                <input type="search" id="tablesMenuSearch" />
+              </div>
+              <div class="menu-grid" id="tablesMenuGrid"></div>
+              <section class="activity-panel activity-panel-below-menu">
+                <h3>آخر النشاطات</h3>
+                <div class="activity-list" id="activityListTables"></div>
+              </section>
+            </div>
+
+            <div class="tables-order-section">
+              <div class="tables-order-header">
+                <h3 id="tablesOrderHeader">طلب جديد - طاولة</h3>
+                <div class="order-status-badge" id="tablesOrderStatusBadge">غير مستلم</div>
+              </div>
+              <div class="order-items" id="tablesOrderItems"></div>
+              <div class="order-totals">
+                <div class="total-line">
+                  <span>المجموع الفرعي:</span>
+                  <span id="tablesSubtotal">₪0.00</span>
+                </div>
+                <div class="total-line">
+                  <span>الخصم:</span>
+                  <span id="tablesDiscountAmount">₪0.00</span>
+                </div>
+                <div class="total-line total-final">
+                  <span>الإجمالي:</span>
+                  <span id="tablesFinalTotal">₪0.00</span>
+                </div>
+              </div>
+              <div class="tables-order-actions">
+                <button class="btn-primary" id="tablesBtnDelivered" disabled>تم التسليم</button>
+                <button class="btn-secondary" id="tablesBtnDiscount" disabled>خصم</button>
+                <button class="btn-secondary" id="tablesBtnRemoveDiscount" disabled>إزالة الخصم</button>
+                <button class="btn-secondary" id="tablesBtnBilling" disabled>محاسبة</button>
+                <button class="btn-danger" id="tablesBtnCancel">إلغاء الطلب</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <div id="tablesModalError" class="error-text"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="tablesBillingModal" role="dialog" aria-modal="true">
+    <div class="modal-dialog">
+      <h2 class="modal-title">محاسبة الطاولة</h2>
+      <div class="modal-body">
+        <div class="receipt-summary">
+          <div class="summary-row">
+            <span>رقم الطلب:</span>
+            <span id="tablesBillingOrderNumber">—</span>
+          </div>
+          <div class="summary-row">
+            <span>الإجمالي:</span>
+            <span id="tablesBillingTotal">₪0.00</span>
+          </div>
+          <div class="summary-row">
+            <span>الخصم:</span>
+            <span id="tablesBillingDiscount">₪0.00</span>
+          </div>
+        </div>
+        <div class="form-row">
+          <label>طريقة الدفع</label>
+          <div class="payment-options">
+            <label class="payment-option">
+              <input type="radio" name="tablesPaymentMethod" value="cash" checked />
+              <span>نقداً</span>
+            </label>
+            <label class="payment-option">
+              <input type="radio" name="tablesPaymentMethod" value="bank_app" />
+              <span>تطبيق بنكي</span>
+            </label>
+            <label class="payment-option">
+              <input type="radio" name="tablesPaymentMethod" value="debt" />
+              <span>دين</span>
+            </label>
+          </div>
+        </div>
+        <div class="form-row">
+          <label for="tablesBillingCustomerName">اسم الزبون</label>
+          <input type="text" id="tablesBillingCustomerName" placeholder="اختياري" />
+        </div>
+        <p class="modal-note" id="tablesBillingError"></p>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="tablesBillingCancel">إلغاء</button>
+        <button type="button" class="btn-primary" id="tablesBillingConfirm">تأكيد المحاسبة</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/modal-global.js"></script>
+  <script type="module" src="js/icons.js"></script>
+  <script src="js/ui-sidebar.js"></script>
+  <script src="js/settings-gate.js"></script>
+  <script src="js/pos.js"></script>
+</body>
+</html>

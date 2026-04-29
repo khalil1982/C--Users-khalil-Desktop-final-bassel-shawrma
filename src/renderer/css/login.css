@@ -1,0 +1,413 @@
+/* ============================================
+   Login Screen Styles
+   Phase C.4: Professional UI Polish
+   ============================================ */
+
+.login-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-6);
+  background: linear-gradient(135deg, var(--primary-50) 0%, var(--neutral-50) 100%);
+}
+
+.login-card {
+  background: var(--bg-card);
+  border: 1px solid var(--neutral-200);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-2xl);
+  padding: var(--spacing-10) var(--spacing-8);
+  width: 100%;
+  max-width: 420px;
+  animation: login-card-enter 0.3s ease;
+}
+
+@keyframes login-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ==========================================
+   LOGO & BRANDING
+   ========================================== */
+.logo-area {
+  text-align: center;
+  margin-bottom: var(--spacing-8);
+}
+
+.logo-placeholder {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto var(--spacing-4);
+  background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+  border-radius: var(--radius-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-lg), 0 0 0 4px var(--primary-100);
+  transition: transform 0.2s ease;
+}
+
+.logo-placeholder:hover {
+  transform: scale(1.05);
+}
+
+.logo-icon {
+  font-size: 2.75rem;
+  line-height: 1;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+img.logo-icon {
+  width: 4rem;
+  height: 4rem;
+  object-fit: contain;
+}
+
+.system-name {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+  color: var(--neutral-900);
+  margin: 0 0 var(--spacing-1);
+  line-height: var(--leading-tight);
+}
+
+.system-subtitle {
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ==========================================
+   LOGIN FORM
+   ========================================== */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-5);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.field label {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--neutral-700);
+  margin-bottom: var(--spacing-2);
+}
+
+.field label.required::after {
+  content: " *";
+  color: var(--error-600);
+}
+
+/* Password Input with Toggle */
+.password-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.field input {
+  width: 100%;
+  padding: var(--spacing-3) var(--spacing-4);
+  font-size: var(--text-base);
+  font-weight: var(--font-normal);
+  border: 1.5px solid var(--neutral-200);
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  color: var(--neutral-800);
+  min-height: 48px;
+  transition: all 0.15s ease;
+}
+
+.field input[type="password"] {
+  padding-left: 3.5rem;
+}
+
+.field input::placeholder {
+  color: var(--neutral-400);
+  opacity: 1;
+}
+
+.field input:hover:not(:disabled) {
+  border-color: var(--neutral-300);
+}
+
+.field input:focus {
+  outline: none;
+  border-color: var(--primary-600);
+  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.1);
+}
+
+.field input:disabled {
+  background: var(--neutral-100);
+  color: var(--neutral-500);
+  cursor: not-allowed;
+}
+
+.field input.error {
+  border-color: var(--error-600);
+}
+
+.field input.error:focus {
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+/* Password Toggle Button */
+.password-toggle {
+  position: absolute;
+  left: 0.75rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--spacing-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: var(--radius-md);
+  transition: background 0.15s ease;
+  color: var(--neutral-500);
+}
+
+.password-toggle:hover {
+  background: var(--primary-50);
+  color: var(--primary-600);
+}
+
+.password-toggle:active {
+  transform: scale(0.95);
+  background: var(--primary-100);
+}
+
+.password-toggle-icon {
+  font-size: var(--text-xl);
+  line-height: 1;
+  user-select: none;
+}
+
+/* ==========================================
+   LOGIN BUTTON
+   ========================================== */
+.btn-login {
+  margin-top: var(--spacing-2);
+  padding: var(--spacing-4);
+  font-size: var(--text-lg);
+  font-weight: var(--font-bold);
+  color: #ffffff;
+  background: var(--primary-600);
+  border: none;
+  border-radius: var(--radius-md);
+  min-height: 52px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-login:hover:not(:disabled) {
+  background: var(--primary-700);
+  box-shadow: var(--shadow-primary);
+  transform: translateY(-1px);
+}
+
+.btn-login:active:not(:disabled) {
+  background: var(--primary-800);
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-login:disabled {
+  background: var(--neutral-300);
+  color: var(--neutral-500);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ==========================================
+   ERROR & HINT MESSAGES
+   ========================================== */
+.error-area {
+  min-height: var(--spacing-6);
+  margin-top: calc(var(--spacing-2) * -1);
+}
+
+.error-msg {
+  margin: 0;
+  padding: var(--spacing-3) var(--spacing-4);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--error-900);
+  background: var(--error-50);
+  border-radius: var(--radius-md);
+  border-left: 4px solid var(--error-600);
+  box-shadow: var(--shadow-sm);
+  animation: error-enter 0.2s ease;
+}
+
+@keyframes error-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hint {
+  text-align: center;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  margin: var(--spacing-5) 0 0;
+  line-height: var(--leading-relaxed);
+}
+
+/* ==========================================
+   RESPONSIVE DESIGN
+   ========================================== */
+@media (max-width: 480px) {
+  .login-screen {
+    padding: var(--spacing-4);
+  }
+
+  .login-card {
+    padding: var(--spacing-8) var(--spacing-6);
+  }
+
+  .logo-placeholder {
+    width: 80px;
+    height: 80px;
+  }
+
+  .logo-icon {
+    font-size: 2.25rem;
+  }
+
+  .system-name {
+    font-size: var(--text-xl);
+  }
+
+  .system-subtitle {
+    font-size: var(--text-sm);
+  }
+}
+
+/* ==========================================
+   PERSONAL INFO SECTION
+   ========================================== */
+.personal-info-card {
+  background: linear-gradient(135deg, var(--primary-50) 0%, var(--neutral-50) 100%);
+  border: 1px solid var(--neutral-200);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-6);
+  margin-top: var(--spacing-8);
+  box-shadow: var(--shadow-lg);
+  max-width: 420px;
+  width: 100%;
+  animation: card-enter 0.4s ease 0.1s both;
+}
+
+@keyframes card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.personal-info-title {
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  color: var(--neutral-800);
+  margin: 0 0 var(--spacing-4);
+  text-align: center;
+  border-bottom: 2px solid var(--primary-200);
+  padding-bottom: var(--spacing-2);
+}
+
+.personal-info-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-3);
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--neutral-100);
+  transition: all 0.2s ease;
+}
+
+.info-item:hover {
+  background: var(--primary-50);
+  border-color: var(--primary-200);
+  transform: translateX(-4px);
+}
+
+.info-icon {
+  width: var(--icon-md);
+  height: var(--icon-md);
+  min-width: var(--icon-md);
+  color: var(--primary-600);
+  flex-shrink: 0;
+}
+
+/* Fallback for missing icons */
+.info-icon:not([src]) {
+  display: none;
+}
+
+.info-icon[src=""] {
+  display: none;
+}
+
+.info-label {
+  font-weight: var(--font-semibold);
+  color: var(--neutral-700);
+  min-width: 100px;
+  flex-shrink: 0;
+}
+
+.info-value {
+  font-weight: var(--font-medium);
+  color: var(--neutral-800);
+  word-break: break-word;
+  text-align: right;
+  flex: 1;
+}
+
+/* ==========================================
+   FOCUS VISIBLE (Accessibility)
+   ========================================== */
+.password-toggle:focus-visible {
+  outline: 2px solid var(--primary-600);
+  outline-offset: 2px;
+}
+
+.btn-login:focus-visible {
+  outline: 2px solid var(--primary-600);
+  outline-offset: 2px;
+}

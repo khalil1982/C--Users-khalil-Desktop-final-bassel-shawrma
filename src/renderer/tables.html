@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إدارة الطاولات – Shawarma Basel POS</title>
+  <link rel="stylesheet" href="css/shared.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/tables.css">
+</head>
+<body>
+  <div class="app">
+    <header class="top-bar">
+      <div class="top-bar-left">
+        <div class="logo-placeholder-sm" aria-hidden="true">🥙</div>
+        <span class="system-name-top">Shawarma Basel POS – نظام إدارة المطعم</span>
+      </div>
+      <div class="top-bar-right">
+        <span class="user-badge" id="userBadge">—</span>
+        <button type="button" class="btn-logout" id="btnLogout" aria-label="خروج">🚪 خروج</button>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <div class="tables-container">
+        <h1 class="tables-title">إدارة الطاولات</h1>
+        <div class="tables-grid" id="tablesGrid">
+          <!-- Tables will be rendered here -->
+        </div>
+        <div class="tables-legend">
+          <span class="legend-item"><span class="legend-available">✅</span> متاحة</span>
+          <span class="legend-item"><span class="legend-occupied">🔴</span> مشغولة</span>
+        </div>
+        <div class="error-area" id="errorArea" role="alert" aria-live="polite"></div>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal-overlay hidden" id="logoutModal" role="dialog" aria-labelledby="logoutModalTitle" aria-modal="true">
+    <div class="modal-dialog">
+      <h2 class="modal-title" id="logoutModalTitle">⚠ تأكيد الخروج</h2>
+      <div class="modal-body">
+        <p>هل أنت متأكد من الخروج من النظام؟</p>
+        <p class="modal-note">ملاحظة: سيتم إنهاء الجلسة الحالية فقط. التطبيق سيبقى مفتوحاً.</p>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="logoutCancel">إلغاء</button>
+        <button type="button" class="btn-danger" id="logoutConfirm">تأكيد الخروج</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script src="js/tables.js"></script>
+</body>
+</html>

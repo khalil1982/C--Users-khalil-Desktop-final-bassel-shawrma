@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Shawarma Basel POS",
+      "runtimeExecutable": "npm.cmd",
+      "runtimeArgs": ["start"],
+      "port": 0
+    },
+    {
+      "name": "Build Template DB",
+      "runtimeExecutable": "npm.cmd",
+      "runtimeArgs": ["run", "build:template-db"],
+      "port": 0
+    }
+  ]
+}

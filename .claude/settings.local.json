@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \":*)",
+      "Bash(npx electron-rebuild -f -w better-sqlite3)",
+      "Bash(node scripts/build-template-db.js)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(where npm)",
+      "Bash(where electron)",
+      "Bash(node --version)",
+      "Bash(npm.cmd run build:template-db)",
+      "Bash(npm.cmd run build)",
+      "Bash(flutter --version)"
+    ]
+  }
+}

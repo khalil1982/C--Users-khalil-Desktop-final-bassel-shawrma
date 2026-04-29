@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تواصل معنا – Shawarma Basel POS</title>
+  <link rel="stylesheet" href="css/shared.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/contact.css">
+</head>
+<body>
+  <div class="app dashboard-app">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-placeholder-sm" aria-hidden="true">🥙</div>
+        <div>
+          <div class="sidebar-title">شاورما باسل</div>
+          <div class="sidebar-subtitle">لوحة التحكم</div>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <button type="button" class="nav-item" data-target="dashboard">الرئيسية</button>
+        <button type="button" class="nav-item" data-target="menu">الأصناف</button>
+        <button type="button" class="nav-item" data-target="orders">الطلبات</button>
+        <button type="button" class="nav-item" data-target="customers">الديون</button>
+        <button type="button" class="nav-item" data-target="finance">المالية</button>
+        <button type="button" class="nav-item" data-target="employees">العاملين</button>
+        <button type="button" class="nav-item" data-target="reports">التقارير</button>
+        <button type="button" class="nav-item" data-target="settings">الإعدادات</button>
+        <button type="button" class="nav-item active" data-target="contact">تواصل معنا</button>
+      </nav>
+    </aside>
+
+    <div class="dashboard-content">
+      <header class="top-bar">
+        <div class="top-bar-left">
+          <span class="system-name-top">تواصل معنا</span>
+        </div>
+        <div class="top-bar-right">
+          <span class="user-badge" id="userBadge">—</span>
+          <button type="button" class="btn-logout" id="btnLogout" aria-label="خروج">🚪 خروج</button>
+        </div>
+      </header>
+
+      <main class="main-content contact-content">
+        <section class="contact-card">
+          <h2>تواصل معنا</h2>
+          <div class="contact-description">
+            <p>هذا النظام مخصص لإدارة مطعم شاورما باسل، ويهدف إلى تنظيم الطلبات، المالية، والتقارير بطريقة سهلة وسريعة.</p>
+          </div>
+          <div class="contact-info">
+            <h3>معلومات التواصل</h3>
+            <div class="contact-item">
+              <img src="assets/icons/user.svg" alt="" class="contact-icon" onerror="this.style.display='none'">
+              <div class="contact-text">
+                <span class="contact-label">الاسم:</span>
+                <span class="contact-value">خليل إبراهيم الحلبي</span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <img src="assets/icons/phone.svg" alt="" class="contact-icon" onerror="this.style.display='none'">
+              <div class="contact-text">
+                <span class="contact-label">الهاتف:</span>
+                <span class="contact-value">0599243972</span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <img src="assets/icons/whatsapp.svg" alt="" class="contact-icon" onerror="this.style.display='none'">
+              <div class="contact-text">
+                <span class="contact-label">واتساب:</span>
+                <span class="contact-value">00972599243972</span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <img src="assets/icons/email.svg" alt="" class="contact-icon" onerror="this.style.display='none'">
+              <div class="contact-text">
+                <span class="contact-label">البريد الإلكتروني:</span>
+                <span class="contact-value">khalil19823@gmail.com</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="settingsGateModal" role="dialog" aria-labelledby="settingsGateModalTitle" aria-modal="true">
+    <div class="modal-dialog">
+      <h2 class="modal-title" id="settingsGateModalTitle">كلمة سر مدير النظام</h2>
+      <div class="modal-body">
+        <p class="modal-note">الإعدادات مخصصة للمدير. أدخل كلمة السر للدخول.</p>
+        <div class="form-row">
+          <label for="settingsGatePassword">كلمة السر</label>
+          <input type="password" id="settingsGatePassword" autocomplete="off" />
+        </div>
+        <p class="modal-note text-danger" id="settingsGateError" role="alert"></p>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="settingsGateCancel">إلغاء</button>
+        <button type="button" class="btn-primary" id="settingsGateConfirm">موافق</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="logoutModal" role="dialog" aria-labelledby="logoutModalTitle" aria-modal="true">
+    <div class="modal-dialog">
+      <h2 class="modal-title" id="logoutModalTitle">⚠ تأكيد الخروج</h2>
+      <div class="modal-body">
+        <p>هل أنت متأكد من الخروج من النظام؟</p>
+        <p class="modal-note">ملاحظة: سيتم إنهاء الجلسة الحالية فقط. التطبيق سيبقى مفتوحاً.</p>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="logoutCancel">إلغاء</button>
+        <button type="button" class="btn-danger" id="logoutConfirm">تأكيد الخروج</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/modal-global.js"></script>
+  <script type="module" src="js/icons.js"></script>
+  <script src="js/ui-sidebar.js"></script>
+  <script src="js/settings-gate.js"></script>
+  <script src="js/contact.js"></script>
+</body>
+</html>

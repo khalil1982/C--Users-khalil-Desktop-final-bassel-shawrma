@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الزبائن – Shawarma Basel POS</title>
+  <link rel="stylesheet" href="css/shared.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/customers.css">
+</head>
+<body>
+  <div class="app dashboard-app">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-placeholder-sm" aria-hidden="true">🥙</div>
+        <div>
+          <div class="sidebar-title">شاورما باسل</div>
+          <div class="sidebar-subtitle">لوحة التحكم</div>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <button type="button" class="nav-item" data-target="dashboard">الرئيسية</button>
+        <button type="button" class="nav-item" data-target="menu">الأصناف</button>
+        <button type="button" class="nav-item" data-target="orders">الطلبات</button>
+        <button type="button" class="nav-item active" data-target="customers">الديون</button>
+        <button type="button" class="nav-item" data-target="finance">المالية</button>
+        <button type="button" class="nav-item" data-target="employees">العاملين</button>
+        <button type="button" class="nav-item" data-target="reports">التقارير</button>
+        <button type="button" class="nav-item" data-target="settings">الإعدادات</button>
+        <button type="button" class="nav-item" data-target="contact">تواصل معنا</button>
+      </nav>
+    </aside>
+
+    <div class="dashboard-content">
+      <header class="top-bar">
+        <div class="top-bar-left">
+          <span class="system-name-top">إدارة الزبائن</span>
+        </div>
+        <div class="top-bar-right">
+          <span class="user-badge" id="userBadge">—</span>
+          <button type="button" class="btn-logout" id="btnLogout" aria-label="خروج">🚪 خروج</button>
+        </div>
+      </header>
+
+      <main class="main-content customers-content">
+        <section class="panel customers-header">
+          <div>
+            <h3>إدارة الزبائن والديون</h3>
+            <p class="text-muted">يمكنك البحث بالاسم أو رقم الهاتف أو الرقم الوطني.</p>
+          </div>
+          <div class="search-actions">
+            <div class="form-row">
+              <label for="customerSearch">بحث الزبائن</label>
+              <input type="text" id="customerSearch" placeholder="ابحث بالاسم أو الهاتف أو الرقم الوطني" />
+            </div>
+            <button type="button" class="btn-primary" id="btnOpenAddDebt">إضافة دين</button>
+          </div>
+        </section>
+
+        <section class="customers-layout">
+          <section class="panel">
+            <h3>الزبائن المدينون</h3>
+            <div class="list-stack" id="debtorsList"></div>
+          </section>
+
+          <section class="panel">
+            <h3>نتائج البحث</h3>
+            <div class="list-stack" id="customersList"></div>
+          </section>
+        </section>
+
+        <div class="error-area" id="errorArea" role="alert" aria-live="polite"></div>
+      </main>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="addDebtModal" role="dialog" aria-labelledby="addDebtTitle" aria-modal="true">
+    <div class="modal-dialog">
+      <h2 class="modal-title" id="addDebtTitle">إضافة دين</h2>
+      <div class="modal-body">
+        <div class="form-grid">
+          <div class="form-row">
+            <label for="debtCustomerName">اسم الزبون</label>
+            <input type="text" id="debtCustomerName" />
+          </div>
+          <div class="form-row">
+            <label for="debtCustomerPhone">رقم الهاتف</label>
+            <input type="text" id="debtCustomerPhone" />
+          </div>
+          <div class="form-row">
+            <label for="debtCustomerNationalId">الرقم الوطني (اختياري)</label>
+            <input type="text" id="debtCustomerNationalId" />
+          </div>
+          <div class="form-row">
+            <label for="debtAmount">قيمة الدين</label>
+            <input type="number" id="debtAmount" min="0" step="0.1" />
+            <span class="form-hint" id="addDebtMaxHint" aria-live="polite"></span>
+          </div>
+        </div>
+        <div class="modal-error" id="addDebtError"></div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="addDebtCancel">إلغاء</button>
+        <button type="button" class="btn-primary" id="addDebtConfirm">حفظ الدين</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="repayDebtModal" role="dialog" aria-labelledby="repayDebtTitle" aria-modal="true">
+    <div class="modal-dialog">
+      <h2 class="modal-title" id="repayDebtTitle">سداد دين</h2>
+      <div class="modal-body">
+        <div class="repay-summary" id="repayCustomerInfo"></div>
+        <div class="form-grid">
+          <div class="form-row">
+            <label for="repayAmount">قيمة السداد</label>
+            <input type="number" id="repayAmount" min="0" step="0.1" />
+          </div>
+          <div class="form-row">
+            <label for="repayMethod">طريقة الدفع</label>
+            <select id="repayMethod">
+              <option value="cash">نقداً</option>
+              <option value="bank_app">تطبيق بنكي</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="repayNotes">ملاحظات (اختياري)</label>
+            <input type="text" id="repayNotes" />
+          </div>
+        </div>
+        <div class="modal-error" id="repayDebtError"></div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="repayDebtCancel">إلغاء</button>
+        <button type="button" class="btn-primary" id="repayDebtConfirm">تأكيد السداد</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="customerDetailsModal" role="dialog" aria-labelledby="customerDetailsModalTitle" aria-modal="true">
+    <div class="modal-dialog modal-large">
+      <h2 class="modal-title" id="customerDetailsModalTitle">تفاصيل الزبون</h2>
+      <div class="modal-body" id="customerDetailsModalContent">
+        <p class="placeholder-msg">جاري التحميل...</p>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="customerDetailsModalClose">إغلاق</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="settingsGateModal" role="dialog" aria-labelledby="settingsGateModalTitle" aria-modal="true">
+    <div class="modal-dialog">
+      <h2 class="modal-title" id="settingsGateModalTitle">كلمة سر مدير النظام</h2>
+      <div class="modal-body">
+        <p class="modal-note">الإعدادات مخصصة للمدير. أدخل كلمة السر للدخول.</p>
+        <div class="form-row">
+          <label for="settingsGatePassword">كلمة السر</label>
+          <input type="password" id="settingsGatePassword" autocomplete="off" />
+        </div>
+        <p class="modal-note text-danger" id="settingsGateError" role="alert"></p>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="settingsGateCancel">إلغاء</button>
+        <button type="button" class="btn-primary" id="settingsGateConfirm">موافق</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="logoutModal" role="dialog" aria-labelledby="logoutModalTitle" aria-modal="true">
+    <div class="modal-dialog">
+      <h2 class="modal-title" id="logoutModalTitle">⚠ تأكيد الخروج</h2>
+      <div class="modal-body">
+        <p>هل أنت متأكد من الخروج من النظام؟</p>
+        <p class="modal-note">ملاحظة: سيتم إنهاء الجلسة الحالية فقط. التطبيق سيبقى مفتوحاً.</p>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="logoutCancel">إلغاء</button>
+        <button type="button" class="btn-danger" id="logoutConfirm">تأكيد الخروج</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/modal-global.js"></script>
+  <script type="module" src="js/icons.js"></script>
+  <script src="js/ui-sidebar.js"></script>
+  <script src="js/settings-gate.js"></script>
+  <script src="js/customers.js"></script>
+</body>
+</html>

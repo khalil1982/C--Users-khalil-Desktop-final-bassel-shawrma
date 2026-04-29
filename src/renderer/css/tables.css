@@ -1,0 +1,106 @@
+.tables-container {
+  padding: 1.5rem;
+}
+
+.tables-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 1.5rem;
+  text-align: center;
+}
+
+.tables-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.table-card {
+  background: var(--bg-card);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 1.25rem 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.2s;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.table-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow);
+}
+
+.table-card.available {
+  border-color: #22c55e;
+  background: #f0fdf4;
+}
+
+.table-card.occupied {
+  border-color: #ef4444;
+  background: #fef2f2;
+}
+
+.table-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.table-status {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.table-card.available .table-status {
+  color: #16a34a;
+}
+
+.table-card.occupied .table-status {
+  color: #dc2626;
+}
+
+.tables-legend {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.legend-item {
+  font-size: 0.95rem;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.legend-available,
+.legend-occupied {
+  font-size: 1.2rem;
+}
+
+.error-area {
+  margin-top: 1rem;
+  min-height: 1.5rem;
+}
+
+.error-msg {
+  margin: 0;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.9rem;
+  color: var(--error-text);
+  background: var(--error-bg);
+  border-radius: var(--radius-sm);
+  border: 1px solid #fecaca;
+  text-align: center;
+}

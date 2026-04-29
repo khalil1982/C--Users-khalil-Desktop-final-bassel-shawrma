@@ -1,0 +1,245 @@
+.reports-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: var(--spacing-6);
+}
+
+.report-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-4);
+  flex-wrap: wrap;
+}
+
+.reports-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.report-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.report-filter {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.field-label {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.field-select {
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: #fff;
+  min-width: 200px;
+}
+
+.report-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: 0 6px 20px var(--shadow);
+}
+
+.report-section-sales {
+  background: var(--primary-50);
+  border-color: var(--primary-200);
+}
+
+.report-section-best-selling {
+  background: var(--info-50);
+  border-color: var(--info-200);
+}
+
+.report-section-prices {
+  background: var(--neutral-50);
+  border-color: var(--neutral-200);
+}
+
+.report-section-purchases {
+  background: var(--warning-50);
+  border-color: var(--warning-200);
+}
+
+.report-section-tables {
+  background: var(--neutral-50);
+  border-color: var(--neutral-200);
+}
+
+.report-section-finance {
+  background: var(--success-50);
+  border-color: var(--success-200);
+}
+
+.report-section-debts {
+  background: var(--error-50);
+  border-color: var(--error-200);
+}
+
+#bestSellingChart {
+  width: 100%;
+  height: 300px;
+  max-width: 100%;
+}
+
+.report-section h2 {
+  margin: 0 0 1rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.report-section h3 {
+  margin: 1rem 0 0.75rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.report-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.report-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-4);
+  align-items: center;
+}
+
+.report-form input {
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+
+.report-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+}
+
+.report-label {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.report-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.report-table th,
+.report-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.report-table th {
+  background: var(--bg-card);
+  font-weight: 700;
+}
+
+.report-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.report-subsection {
+  margin-top: 1.25rem;
+}
+
+.financial-record-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.financial-group {
+  background: #fff;
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  border: 1px solid var(--border);
+}
+
+.financial-group h3 {
+  margin: 0 0 1.25rem 0 !important;
+  font-size: 1.2rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--border);
+}
+
+.revenue-group h3 { color: var(--success-700); border-bottom-color: var(--success-100); }
+.expense-group h3 { color: var(--error-700); border-bottom-color: var(--error-100); }
+.net-group h3 { color: var(--primary-700); border-bottom-color: var(--primary-100); }
+
+.financial-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px dashed var(--border);
+}
+
+.financial-row:last-child { border-bottom: none; }
+
+.financial-row.total {
+  margin-top: 0.5rem;
+  padding-top: 1rem;
+  border-top: 2px solid var(--border);
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+.financial-row.net-result {
+  padding: 1rem 0;
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+.val {
+  font-family: 'Cairo', sans-serif;
+  letter-spacing: 0.5px;
+}
+
+.text-success { color: #16a34a; }
+.text-danger { color: #dc2626; }
+
+.error-area {
+  margin-top: 1rem;
+  min-height: 1.5rem;
+  color: var(--error-text);
+}

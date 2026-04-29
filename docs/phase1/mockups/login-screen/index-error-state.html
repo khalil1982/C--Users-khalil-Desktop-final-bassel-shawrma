@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login – Error State (Phase 1 Mockup)</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="login-screen">
+    <div class="login-card">
+      <div class="logo-area">
+        <div class="logo-placeholder" aria-hidden="true">
+          <span class="logo-icon">🥙</span>
+        </div>
+        <h1 class="system-name">Shawarma Basel POS</h1>
+        <p class="system-subtitle">نظام إدارة مطعم شاورما</p>
+      </div>
+
+      <form class="login-form" action="#" method="post" novalidate>
+        <div class="field">
+          <label for="username">اسم المستخدم</label>
+          <input type="text" id="username" name="username" placeholder="أدخل اسم المستخدم" value="user" autocomplete="username" dir="rtl">
+        </div>
+        <div class="field">
+          <label for="password">كلمة المرور</label>
+          <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="current-password" dir="rtl">
+        </div>
+        <button type="submit" class="btn-login">دخول</button>
+        <div class="error-area" role="alert" aria-live="polite">
+          <p class="error-msg">خطأ: اسم المستخدم أو كلمة المرور غير صحيحة. المحاولات المتبقية: 2</p>
+        </div>
+      </form>
+
+      <p class="hint">اضغط Enter لتسجيل الدخول</p>
+    </div>
+  </div>
+</body>
+</html>

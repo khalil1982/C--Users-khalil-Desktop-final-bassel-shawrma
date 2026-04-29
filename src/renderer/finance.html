@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>المالية – Shawarma Basel POS</title>
+  <link rel="stylesheet" href="css/shared.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/finance.css">
+</head>
+<body>
+  <div class="app dashboard-app">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-placeholder-sm" aria-hidden="true">
+          <img src="../../assets/icon.svg" alt="" class="logo-icon">
+        </div>
+        <div>
+          <div class="sidebar-title">شاورما باسل</div>
+          <div class="sidebar-subtitle">لوحة التحكم</div>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <button type="button" class="nav-item" data-target="dashboard">الرئيسية</button>
+        <button type="button" class="nav-item" data-target="menu">الأصناف</button>
+        <button type="button" class="nav-item" data-target="orders">الطلبات</button>
+        <button type="button" class="nav-item" data-target="customers">الديون</button>
+        <button type="button" class="nav-item active" data-target="finance">المالية</button>
+        <button type="button" class="nav-item" data-target="employees">العاملين</button>
+        <button type="button" class="nav-item" data-target="reports">التقارير</button>
+        <button type="button" class="nav-item" data-target="settings">الإعدادات</button>
+        <button type="button" class="nav-item" data-target="contact">تواصل معنا</button>
+      </nav>
+    </aside>
+
+    <div class="dashboard-content">
+      <header class="top-bar">
+        <div class="top-bar-left">
+          <span class="system-name-top">المالية والمشتريات</span>
+        </div>
+        <div class="top-bar-right">
+          <span class="user-badge" id="userBadge">—</span>
+          <button type="button" class="btn-logout" id="btnLogout" aria-label="خروج">خروج</button>
+        </div>
+      </header>
+
+      <main class="main-content finance-content">
+        <section class="panel">
+          <div class="panel-header">
+            <h3>فئات المشتريات</h3>
+            <button type="button" class="btn-primary" id="btnOpenAddCategoryModal">+ إضافة فئة</button>
+          </div>
+          <div id="categoriesList" class="categories-list"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <h3>تسجيل مشتريات</h3>
+            <div class="panel-header-actions">
+              <button type="button" class="btn-secondary" id="btnPurchasesModal">مشتريات اليوم</button>
+              <button type="button" class="btn-secondary" id="btnPurchaseDetails">تفاصيل الأصناف</button>
+            </div>
+          </div>
+          <div class="purchase-items-grid" id="purchaseItemsGrid"></div>
+          
+          <div class="purchase-total-section">
+            <label for="purchaseTotalAmount">المبلغ الإجمالي للمشتريات (₪)</label>
+            <input type="text" id="purchaseTotalAmount" readonly tabindex="-1" inputmode="decimal" autocomplete="off" data-keep-readonly data-keep-tabindex />
+            <div id="purchaseTotalError" class="error-text"></div>
+          </div>
+          
+          <div class="purchase-summary">
+            <button type="button" class="btn-primary" id="btnSavePurchase">حفظ المشتريات</button>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h3>سحب الشركاء</h3>
+          <div class="form-grid">
+            <div class="form-row">
+              <label for="partnerName">إضافة شريك</label>
+              <input type="text" id="partnerName" placeholder="اسم الشريك" autocomplete="off" />
+            </div>
+            <div class="form-row">
+              <label>&nbsp;</label>
+              <button type="button" class="btn-secondary" id="btnAddPartner">إضافة شريك</button>
+            </div>
+          </div>
+          <div class="form-grid">
+            <div class="form-row">
+              <label for="partnerSelect">الشريك</label>
+              <select id="partnerSelect"></select>
+            </div>
+            <div class="form-row">
+              <label for="withdrawalAmount">القيمة</label>
+              <input type="number" id="withdrawalAmount" min="0" step="0.1" placeholder="القيمة" inputmode="decimal" autocomplete="off" />
+            </div>
+            <div class="form-row">
+              <label for="withdrawalDate">تاريخ السحب (مطلوب)</label>
+              <input type="date" id="withdrawalDate" title="تاريخ السحب" required />
+            </div>
+            <div class="form-row">
+              <label for="withdrawalNotes">ملاحظات (اختياري)</label>
+              <input type="text" id="withdrawalNotes" placeholder="ملاحظات (اختياري)" autocomplete="off" />
+            </div>
+          </div>
+          <button type="button" class="btn-primary" id="btnConfirmWithdrawal">تأكيد السحب</button>
+          <button type="button" class="btn-secondary" id="btnViewWithdrawalsReport">عرض تقرير السحوبات</button>
+        </section>
+
+        <div class="error-area" id="errorArea" role="alert" aria-live="polite"></div>
+      </main>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="settingsGateModal" role="dialog" aria-labelledby="settingsGateModalTitle" aria-modal="true">
+    <div class="modal-dialog">
+      <h2 class="modal-title" id="settingsGateModalTitle">كلمة سر مدير النظام</h2>
+      <div class="modal-body">
+        <p class="modal-note">الإعدادات مخصصة للمدير. أدخل كلمة السر للدخول.</p>
+        <div class="form-row">
+          <label for="settingsGatePassword">كلمة السر</label>
+          <input type="password" id="settingsGatePassword" autocomplete="off" />
+        </div>
+        <p class="modal-note text-danger" id="settingsGateError" role="alert"></p>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="settingsGateCancel">إلغاء</button>
+        <button type="button" class="btn-primary" id="settingsGateConfirm">موافق</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="logoutModal" role="dialog" aria-labelledby="logoutModalTitle" aria-modal="true">
+    <div class="modal-dialog">
+      <h2 class="modal-title" id="logoutModalTitle">⚠ تأكيد الخروج</h2>
+      <div class="modal-body">
+        <p>هل أنت متأكد من الخروج من النظام؟</p>
+        <p class="modal-note">ملاحظة: سيتم إنهاء الجلسة الحالية فقط. التطبيق سيبقى مفتوحاً.</p>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="logoutCancel">إلغاء</button>
+        <button type="button" class="btn-danger" id="logoutConfirm">تأكيد الخروج</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="addCategoryModal" role="dialog" aria-labelledby="addCategoryModalTitle" aria-modal="true">
+    <div class="modal-dialog">
+      <h2 class="modal-title" id="addCategoryModalTitle">إضافة فئة مشتريات</h2>
+      <div class="modal-body">
+        <div class="form-row">
+          <label for="modalCategoryName">اسم الفئة</label>
+          <input type="text" id="modalCategoryName" autocomplete="off" />
+        </div>
+        <div id="addCategoryError" class="error-text"></div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="addCategoryCancel">إلغاء</button>
+        <button type="button" class="btn-primary" id="addCategoryConfirm">حفظ</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="deleteCategoryModal" role="dialog" aria-modal="true">
+    <div class="modal-dialog">
+      <h2 class="modal-title" id="deleteCategoryModalTitle">حذف فئة المشتريات</h2>
+      <div class="modal-body">
+        <p id="deleteCategoryMessage">هل أنت متأكد من حذف هذه الفئة؟</p>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="deleteCategoryCancel">إلغاء</button>
+        <button type="button" class="btn-danger" id="deleteCategoryConfirm">حذف</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="purchaseDetailsModal" role="dialog" aria-modal="true">
+    <div class="modal-dialog modal-large">
+      <h2 class="modal-title">تفاصيل الأصناف</h2>
+      <div class="modal-body" id="purchaseDetailsContent"></div>
+      <div class="modal-actions">
+        <div id="purchaseDetailsError" class="error-text"></div>
+        <button type="button" class="btn-primary" id="btnCalculatePurchaseTotal">🧮 احسب</button>
+        <button type="button" class="btn-secondary" id="purchaseDetailsClose">إغلاق</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="withdrawalsReportModal" role="dialog" aria-labelledby="withdrawalsReportModalTitle" aria-modal="true">
+    <div class="modal-dialog modal-large">
+      <h2 class="modal-title" id="withdrawalsReportModalTitle">تقرير سحوبات الشركاء</h2>
+      <div class="modal-body">
+        <div id="withdrawalsReportContent"></div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="withdrawalsReportClose">إغلاق</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="purchasesModal" role="dialog" aria-labelledby="purchasesModalTitle" aria-modal="true">
+    <div class="modal-dialog modal-large">
+      <h2 class="modal-title" id="purchasesModalTitle">مشتريات بالتاريخ</h2>
+      <div class="modal-body">
+        <div class="form-row" style="margin-bottom: var(--spacing-4);">
+          <label for="purchasesFilterDate">التاريخ</label>
+          <input type="date" id="purchasesFilterDate" title="التاريخ" />
+        </div>
+        <div id="purchasesModalContent"></div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="purchasesModalClose">إغلاق</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="editPurchaseItemModal" role="dialog" aria-modal="true">
+    <div class="modal-dialog">
+      <h2 class="modal-title">تعديل الصنف</h2>
+      <div class="modal-body">
+        <div class="form-row">
+          <label for="editItemCategory">النوع (الفئة)</label>
+          <select id="editItemCategory"></select>
+        </div>
+        <div class="form-row">
+          <label for="editItemPrice">السعر (₪)</label>
+          <input type="number" id="editItemPrice" min="0" step="0.1" inputmode="decimal" autocomplete="off" />
+        </div>
+        <div id="editPurchaseItemError" class="error-text"></div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="editPurchaseItemCancel">إلغاء</button>
+        <button type="button" class="btn-primary" id="editPurchaseItemConfirm">حفظ</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/modal-global.js"></script>
+  <script type="module" src="js/icons.js"></script>
+  <script src="js/ui-sidebar.js"></script>
+  <script src="js/settings-gate.js"></script>
+  <script src="js/finance.js"></script>
+</body>
+</html>
